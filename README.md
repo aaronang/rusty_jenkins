@@ -11,13 +11,47 @@ According to the [documentation](https://github.com/jenkinsci/jenkins/blob/22aa2
 `artifactDaysToKeepStr`: Artifacts are only kept up to this days.<br>
 `artifactNumToKeepStr`: Only this number of builds have their artifacts kept.
 
-The parameter names and documentation may seem obvious but can be tricky.
+The parameter names and documentation may seem obvious but can be deceptive.
 For example, when `numToKeepStr` is set to 10, every branch and pull request allows 10 builds to persist.
 Therefore, given a repository with three branches:
 ```bash
 $ git branch
-* master
   development
   documentation
+* master
 ```
 The maximum allowable number of persisted builds is `3 * 10 = 30`.
+
+## Deep Dive
+
+Assuming Jenkins was installed according to the ["Installing Jenkins" guide](https://jenkins.io/doc/book/installing/), Jenkins stores build logs and artifacts in the location `/var/jenkins_home/jobs/<repository>/branches`.
+For each branch and pull request Jenkins creates a directory to store build logs and artifacts.
+For example, given the branches `master`, `development`, `documentation`, and one pull request, Jenkins will have the following directory structure:
+```bash
+$ pwd
+/var/jenkins_home/jobs/<repository>
+
+$ tree branches
+branches
+├── PR-1
+├── development
+├── documentation
+└── master
+```
+
+Inside one of the directories, the tree structure looks something like:
+```bash
+$ pwd
+/var/jenkins_home/jobs/<repository>/branches
+
+$ tree master
+master
+├── builds
+├── config.xml
+├── lastStable
+├── lastSuccessful
+├── name-utf8.txt
+├── nextBuildNumber
+├── scm-polling.log
+└── scm-revision-hash.xml
+```
