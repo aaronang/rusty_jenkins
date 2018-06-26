@@ -6,7 +6,7 @@ pipeline {
         pollSCM('* * * * *')
     }
     options {
-        buildDiscarder(logRotator(numToKeepStr: '2'))
+        buildDiscarder(logRotator(numToKeepStr: '20'))
     }
     stages {
         stage('Run') {
