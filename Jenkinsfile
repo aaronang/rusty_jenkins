@@ -2,6 +2,9 @@ pipeline {
     agent {
         docker { image 'rust:latest' }
     }
+    triggers {
+        pollSCM('* * * * *')
+    }
     stages {
         stage('Build') {
             steps {
