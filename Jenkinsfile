@@ -3,7 +3,7 @@ pipeline {
         docker { image 'rust:latest' }
     }
     options {
-        buildDiscarder(logRotator(numToKeepStr: '20'))
+        buildDiscarder(logRotator(numToKeepStr: '2'))
     }
     triggers {
         pollSCM('* * * * *')
