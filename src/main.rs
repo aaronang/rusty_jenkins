@@ -7,5 +7,6 @@ fn main() {
 
     println!("Hello, world!");
     println!("Secrent number: {}!", secret_number);
+    println!("Ok, world!");
     println!("Bye, world!");
 }
