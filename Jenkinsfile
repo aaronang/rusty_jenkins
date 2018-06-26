@@ -2,11 +2,11 @@ pipeline {
     agent {
         docker { image 'rust:latest' }
     }
-    triggers {
-        pollSCM('* * * * *')
-    }
     options {
         buildDiscarder(logRotator(numToKeepStr: '20'))
+    }
+    triggers {
+        pollSCM('* * * * *')
     }
     stages {
         stage('Run') {
