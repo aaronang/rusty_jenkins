@@ -11,9 +11,9 @@ According to the [documentation](https://github.com/jenkinsci/jenkins/blob/22aa2
 `artifactDaysToKeepStr`: Artifacts are only kept up to this days.<br>
 `artifactNumToKeepStr`: Only this number of builds have their artifacts kept.
 
-The parameter names may seem obvious but can be tricky.
+The parameter names and documentation may seem obvious but can be tricky.
 For example, when `numToKeepStr` is set to 10, every branch and pull request allows 10 builds to persist.
-Therefore, given a repository has three branches:
+Therefore, given a repository with three branches:
 ```bash
 $ git branch
 * master
@@ -21,22 +21,3 @@ $ git branch
   documentation
 ```
 The maximum allowable number of persisted builds is `3 * 10 = 30`.
-
-
-
-
-```groovy
-pipeline {
-    agent any
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '10', artifactNumToKeepStr: '2'))
-    }
-    stages {
-        stage('Run') {
-            steps {
-                sh 'cargo run'
-            }
-        }
-    }
-}
-```
