@@ -14,5 +14,16 @@ pipeline {
                 sh 'cargo run'
             }
         }
+        stage('Release') {
+            steps {
+                sh 'cargo build --release'
+            }
+        }
+    }
+
+    post {
+        always {
+            archiveArtifacts artifacts: 'target/release/rusty_jenkins', fingerprint: true
+        }
     }
 }
